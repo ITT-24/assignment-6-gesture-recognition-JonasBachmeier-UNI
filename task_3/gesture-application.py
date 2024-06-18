@@ -39,6 +39,10 @@ def preproces_data(points):
 
     return resampled
 
+# The prediction is not working properly, i'm having a similar problem to taks 2, but due to the smaller
+# amount of gestures to predit, the model is able to predict it correctly sometimes, but most of the time
+# it predicts the wrong gesture
+
 def predict_gesture(points):
     points = preproces_data(points)
     print(points)
@@ -307,6 +311,9 @@ def on_mouse_release(x, y, button, modifiers):
 def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
     if drawing:
         points.append((x, y))
+
+
+# Keyboard input still implemented due to the gesture recognition not working properly
 
 @window.event
 def on_key_press(symbol, modifiers):
