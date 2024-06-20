@@ -3,6 +3,7 @@ import numpy as np
 import os
 import math
 import tkinter as tk
+import sys
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -22,10 +23,17 @@ from sklearn.preprocessing import StandardScaler
 
 NUM_POINTS = 50
 
+if len(sys.argv) < 2:
+    print('please provide path to the dataset')
+    sys.exit(0)
+
+PATH = sys.argv[1]
+
 def get_gesture_data():
+    global PATH
     data = []
     counter = 0
-    for root, subdirs, files in os.walk('../../lstm_demo/xml_logs/s01'):
+    for root, subdirs, files in os.walk(PATH):
         if 'ipynb_checkpoint' in root:
             continue
 

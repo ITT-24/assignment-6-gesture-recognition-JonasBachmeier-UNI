@@ -24,6 +24,7 @@ drawed_gestures = []
 
 # Gesture recognition part of the code
 def preproces_data(points):
+    print('preprocess')
 
     points = np.array(points, dtype=float)
                     
@@ -46,9 +47,14 @@ def preproces_data(points):
 def predict_gesture(points):
     points = preproces_data(points)
     print(points)
-    result = RECOGNIZER.predict(np.array([points]))
-    prediction = np.argmax(result)
-    prediction_label = encoder.inverse_transform(np.array([prediction]))[0]
+    try:
+        result = RECOGNIZER.predict(np.array([points]))
+        prediction = np.argmax(result)
+        prediction_label = encoder.inverse_transform(np.array([prediction]))[0]
+    except:
+        print('hoppla')
+        prediction_label = random.choice(LABELS)
+    print(prediction_label)
     return prediction_label
 
 # Game part of the code
@@ -82,6 +88,7 @@ class Game:
         self.score = 0
 
     def move(self):
+        print('move')
         if self.room.enemy:
             print("You can't leave with an enemy in the room")
             return
@@ -128,6 +135,7 @@ class Game:
 
 
     def attack(self):
+        print('attack')
         if self.room.enemy:
             self.player.attack(self.room.enemy)
             if self.room.enemy.health <= 0:
@@ -137,12 +145,14 @@ class Game:
             
 
     def heal(self):
+        print('heal')
         if self.player.heals == []:
             print("You have no health potions")
             return
         self.player.heal(self.player.heals.pop())
     
     def action(self, gesture):
+        print('action!')
         if gesture == "x":
             self.attack()
         elif gesture == "circle":
